@@ -40,9 +40,9 @@ void readsparse(sparse a[], int m, int n)
                  printf("%d\t", a[p].col);
                  printf("%d\n", a[p].val);
          }
-         float sparsity=sp/(a[0].row*a[0].col);
+         float sparsity = (float)(a[0].row * a[0].col - a[0].val) / (a[0].row *a[0].col);
          
-         printf("\n sparsity of matrix ",sp);
+         printf("\n sparsity of matrix ",sparsity);
 }
 
 void main()
