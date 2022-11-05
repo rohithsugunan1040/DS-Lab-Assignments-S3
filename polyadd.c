@@ -1,114 +1,90 @@
 
 #include<stdio.h>
-#include<math.h>
 
-struct poly
+struct Polynomial
 {
-  float coeff;
-  int exp;
+    int coeff;
+    int exp;
 };
 
+struct Polynomial first[15], second[15], result[15];
 
-//declaration of polynomials
-struct poly a[50],b[50],c[50],d[50];
 
+void display(struct Polynomial poly[], int terms)
+{
+    int i;
+    printf("\n");
+    printf("%dX^%d ", poly[0].coeff, poly[0].exp);
+    for(i = 1; i < terms ; i++)
+    {
+        printf("+%dX^%d ", poly[i].coeff, poly[i].exp);
+    }
+}
+
+
+int readExpression(struct Polynomial poly[])
+{
+    int terms, i;
+    printf("\nNumber of terms: ");
+    scanf("%d", &terms);
+    printf("\nEnter the coeffecients and exponents ");
+    for(i = 0 ; i<terms; i++)
+    {
+        printf("\nCoeffecient :");
+        scanf("%d", &poly[i].coeff);
+        printf("Exponent :");
+        scanf("%d", &poly[i].exp);
+    }
+    return terms;
+}
+int addExpressions(int firstCount, int secondCount)
+{
+    int i, j, k;
+    i = 0;
+    j = 0;
+    k = 0;
+    while(i < firstCount || j < secondCount)
+    {
+        if(first[i].exp == second[j].exp)
+        {
+            result[k].coeff = first[i].coeff + second[j].coeff;
+            result[k].exp = first[i].exp;
+            i++;
+            j++;
+            k++;
+        }
+        else if(first[i].exp > second[j].exp)
+        {
+            result[k].coeff = first[i].coeff;
+            result[k].exp = first[i].exp;
+            i++;
+            k++;
+        }
+        else
+        {
+            result[k].coeff = second[i].coeff;
+            result[k].exp = second[j].exp;
+            j++;
+            k++;
+        }
+    }
+
+   
+    return k;
+}
 int main()
 {
- int i;
- int deg1,deg2;      //stores degrees of the polynomial
- int k=0,l=0,m=0;
- 
- 
- printf("Enter the highest degree of poly1:");
- scanf("%d",&deg1);
- 
- //taking polynomial terms from the user
- for(i=0;i<=deg1;i++)
- {
- 
-    //entering values in coefficient of the polynomial terms
-    printf("\nEnter the coeff of x^%d :",i);
-    scanf("%f",&a[i].coeff);
-	
-	//entering values in exponent of the polynomial terms
-	a[k++].exp = i;
- }
-
-
- 
- //taking second polynomial from the user
- printf("\nEnter the highest degree of poly2:");
- scanf("%d",&deg2);
- 
- for(i=0;i<=deg2;i++)
- { 
-       printf("\nEnter the coeff of x^%d :",i);
-       scanf("%f",&b[i].coeff);
-	   
-	   b[l++].exp = i;
- }
-
- 
- //printing first polynomial
-  printf("\nExpression 1 = %.1f",a[0].coeff);
-  for(i=1;i<=deg1;i++)
-  {
-    printf("+ %.1fx^%d",a[i].coeff,a[i].exp);
-  }    
-  
-  
-  //printing second polynomial
-  printf("\nExpression 2 = %.1f",b[0].coeff);
-   for(i=1;i<=deg2;i++)
-    {
-      printf("+ %.1fx^%d",b[i].coeff,b[i].exp);
-    }
-
-
-//Adding the polynomials	
- if(deg1>deg2)
-    {
-		 for(i=0;i<=deg2;i++)
-		  {
-			c[m].coeff = a[i].coeff + b[i].coeff;
-			c[m].exp = a[i].exp;
-			m++;
-		  }
-		  
-		  for(i=deg2+1;i<=deg1;i++)
-		  {
-			c[m].coeff = a[i].coeff;
-			c[m].exp = a[i].exp;
-			m++;
-		  }
-
-    }
- else
-  {
-    for(i=0;i<=deg1;i++)
-     {
-       c[m].coeff = a[i].coeff + b[i].coeff;
-       c[m].exp = a[i].exp;
-       m++;
-     }
-    
-	for(i=deg1+1;i<=deg2;i++)
-    {
-      c[m].coeff = b[i].coeff;
-      c[m].exp = b[i].exp;
-      m++;
-    }
-  }
-  
-  
-  
-  //printing the sum of the two polynomials
-  printf("\nExpression after additon  = %.1f",c[0].coeff);
-  for(i=1;i<m;i++)
-  {
-     printf("+ %.1fx^%d",c[i].coeff,c[i].exp);
-   }	 
- 
-  return 0;
-
+    int firstCount, secondCount, resultCount;
+    printf("\nFirst Expression:\n");
+    firstCount = readExpression(first);
+    printf("\nSecond Expression:\n");
+    secondCount = readExpression(second);
+    printf("\nFirst Expression");
+    display(first, firstCount);
+    printf("\nSecond Expression");
+    display(second, secondCount);
+    resultCount = addExpressions(firstCount, secondCount);
+    printf("\nResultant Expression:\n");
+    display(result, resultCount);
+    return 0;
 }

@@ -1,3 +1,5 @@
+//fast transpose to check symmetry
+
 #include<stdio.h>
 #include<stdlib.h>
 

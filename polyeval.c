@@ -1,44 +1,61 @@
 #include<stdio.h>
-
-
-struct poly
+#include<math.h>
+typedef struct Polynomial
 {
-  float coeff;
-  int exp;
-};
+    int coeff;
+    int exp;
+}Polynomial;
+
+Polynomial first[15];
+void display(Polynomial poly[], int terms)
+{
+    int i;
+    printf("\n");
+    printf("%dX^%d ", poly[0].coeff, poly[0].exp);
+    for(i = 1; i < terms ; i++)
+    {
+        printf("+%dX^%d ", poly[i].coeff, poly[i].exp);
+    }
+}
+
+int readExpression(Polynomial poly[])
+{
+    int terms, i;
+    printf("\nNumber of terms: ");
+    scanf("%d", &terms);
+    printf("\nEnter the coeffecients and exponents ");
+    for(i = 0 ; i<terms; i++)
+    {
+        printf("\nCoeffecient :");
+        scanf("%d", &poly[i].coeff);
+        printf("Exponent :");
+        scanf("%d", &poly[i].exp);
+    }
+    return terms;
+}
+int evalExpressions(Polynomial poly[], int terms,int x)
+{
+    int i,sum=0;
+    for(i = 0;i < terms; i++)
+    {
+        
+        sum+=(poly[i].coeff)*pow(x,poly[i].exp);
+    }
+    return sum;
 
 
-//declaration of polynomials
-struct poly a[50];
-
+}
 int main()
 {
- int i;
- int d;
- int k=0;
- float sum=0;
- 
- 
- printf("Enter the highest degree of poly1:");
- scanf("%d",&d);
- 
- //taking polynomial terms from the user
- for(i=0;i<=d;i++)
- {
- 
-    //entering values in coefficient of the polynomial terms
-    printf("\nEnter the coeff of x^%d :",i);
-    scanf("%f",&a[i].coeff);
-	
-	//entering values in exponent of the polynomial terms
-	a[k++].exp = i;
- }
- for(i=0;i<=d;i++)
- {
-    sum=sum+a[i].coeff;
+    int firstCount, resultSum,x;
+    printf("\nFirst Expression:\n");
+    firstCount = readExpression(first);
+    printf("\nFirst Expression");
+    display(first, firstCount);
+    printf("\nEnter the value for x\n");
+    scanf("%d",&x);
+    resultSum=evalExpressions(first,firstCount,x);
+    printf("\nThe sum is %d\n",resultSum);
 
 
- }
-//sum=(int)sum;
- printf("The sum of coefficients is %.2f",sum);
 }

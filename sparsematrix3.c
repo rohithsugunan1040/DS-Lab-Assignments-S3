@@ -22,13 +22,14 @@ void readsparse(sparse a[], int m, int n)
               for(j=0; j<n; j++)
              {
                     scanf("%d", &item);
-                    if(item == 0)
+                    if(item == 0){
                         sp+=1;
-                        continue;
+                        continue;}
+                        
                     a[k].row = i;
                     a[k].col = j;
                     a[k].val = item;
-                     k++;
+                    k++;
                }
         }
         a[0].val = k-1;
@@ -40,9 +41,9 @@ void readsparse(sparse a[], int m, int n)
                  printf("%d\t", a[p].col);
                  printf("%d\n", a[p].val);
          }
-         float sparsity = (float)(a[0].row * a[0].col - a[0].val) / (a[0].row *a[0].col);
+         float sparsity = (float)(a[0].row * a[0].col - a[0].val) / (a[0].row * a[0].col);
          
-         printf("\n sparsity of matrix ",sparsity);
+         printf("\n sparsity of matrix %.3f",sparsity);
 }
 
 void main()

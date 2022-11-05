@@ -1,3 +1,5 @@
+//fast transpose
+
 #include<stdio.h>
 #include<stdlib.h>
 
