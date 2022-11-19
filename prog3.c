@@ -2,31 +2,30 @@
 
 #include <stdio.h>
 #include <stdlib.h> //for exit
-#define Max 50
+#define MAX 50
 int stack[Max], top = -1, minstack[2], mtop = -1;
-void push(int item)
+void push(int data)
 {
-    if (top == Max - 1)
-    {
-        printf("StackFull");
-    }
+    if (top == MAX - 1)
+        printf("\nStack overflow");
     else
     {
-        stack[++top] = item;
+        
+        stack[++top] = data;
 
-        if (mtop = -1)
+        if(isEmpty(mtop))
         {
-            ++mtop;
-            minstack[mtop] = item;
+            minstack[++mtop] = data;
         }
-        else 
-        {    if (item<=minstack[mtop])
-            {
-                minstack[mtop] = item;
+        else
+        {
+            if (data <= minstack[mtop] ) {
+                minstack[++mtop] = data;
             }
         }
     }
 }
+
 
 int pop()
 {
@@ -39,11 +38,13 @@ int pop()
         printf("Poped element : %d\n", d);
         if (d = minstack[mtop])
         {
-            --mtop;
+            mtop--;
         }
     }
     return d;
 }
+
+
 
 void display()
 {
@@ -59,8 +60,20 @@ void display()
         {
             printf(" %d ", stack[i]);
         }
-        printf("\nminimum element is %d", minstack[mtop]);
+        
     }
+}
+
+void displaymin()
+{
+  if(mtop=-1)
+    {
+    printf("\nMinStack is Empty");
+    }
+  else
+    {
+    printf("\nMinimum Element is : %d ",minstack[mtop]);
+    }  
 }
 
 void main()
@@ -70,7 +83,7 @@ void main()
     int n;
     do
     {
-        printf("\n1.Push\n2.Pop\n3.display\n4.Exit ");
+        printf("\n1.Push\n2.Pop\n3.display Stack with Minimum Element\n4.Exit ");
         printf("\nenter the choice ");
         scanf("%d", &ch);
         switch (ch)
@@ -88,6 +101,7 @@ void main()
 
         case 3:
             display();
+            displaymin();
             break;
 
         default:
