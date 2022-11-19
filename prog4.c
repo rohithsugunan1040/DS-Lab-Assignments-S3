@@ -1,41 +1,42 @@
-//Implement a sorted push so that stack is always maintained in sorted order.
+//sorted push.
 #include<stdio.h>
 #include<stdlib.h>
 #define MAX 100
-int stack[MAX],top=-1;
-void sortpush(int item[],int n)
+int stack[MAX],top=-1,tempstack[MAX],temptop=-1;
+
+void push(int data)
 {
-    int it,i,j,temp;
-    for(i=0;i<n;i++)
+    if (top == MAX - 1)
+        printf("\nStack overflow");
+    else if (top == -1)
+        stack[++top] = data;
+    else
     {
-        for(j=0;j<n-i-1;j++)
+        int tempstack[MAX], temptop = -1;
+        while(data > stack[top] && top !=-1)
         {
-            if(item[j]>item[j+1])
-            {
-                temp=item[j];
-                item[j+1]=item[j];
-                item[j+1]=temp;
-            }
+            int del = stack[top--];
+            tempstack[++temptop] = del;
+        }
+        stack[++top] = data;
+        while(temptop>=0)
+        {
+            int del = tempstack[temptop--];
+            stack[++top] = del;
         }
     }
-
-    //here u should write the fn for pushing the element of sorted to array to stack 
-    for(i=0;i<n;i++)
-      {
-        push(item[i]);
-      }
-
-
-    
 }
-void push(int data)  
+void pop()
 {
-    if(top==MAX-1)
-        printf("Stack Overflow\n");
+    int del;
+    if (top == -1)
+        printf("\nStack empty");
     else
-    stack[++top]=data;
+    {
+        del = stack[top--];
+        printf("\nDeleted: %d", del);
+    }
 }
-
 void display()
 {
     if(top==-1)
@@ -51,6 +52,7 @@ void display()
 }
 int main()
 {
+    
     int ch,element;
     do
     {
@@ -58,14 +60,13 @@ int main()
         printf("\n1.Push");
         printf("\n2.Pop");
         printf("\n3.Display Stack");
-        printf("\n4.Display sorted push ");
-        printf("\n5.Exit");
+        printf("\n4.Exit");
         printf("\nEnter an option\n");
         scanf("%d",&ch);
         switch(ch)
         {
             case 1:
-                printf("\nEnter the element to insert\n");   //change for inputting an array!
+                printf("\nEnter the element to insert\n");   
                 scanf("%d",&element);
                 push(element);
                 break;
@@ -76,8 +77,8 @@ int main()
                 display();
                 break;  
             case 4 :
-                   //complete for printong the sorted elemrnts
-            default: exit(0);          
+                     exit(0);
+                   
         }
     }while(ch<4);
     return 0;
